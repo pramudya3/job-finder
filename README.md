@@ -43,5 +43,9 @@ This is a Golang-based backend API for managing companies and jobs, designed wit
 
 4. Run the application:
     ```bash
-    go run main.go
+    go run ./app
     ```
+5. Or you can use docker compose
+ ```
+ docker compose build && docker compose up
+ ```
