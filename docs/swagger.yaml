@@ -1,0 +1,201 @@
+basePath: /api/v1
+definitions:
+  model.CreateCompany:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  model.CreateJobReq:
+    properties:
+      company_id:
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+    type: object
+  response.ResFailed:
+    properties:
+      message: {}
+    type: object
+  response.ResSuccess:
+    properties:
+      data: {}
+      meta: {}
+    type: object
+info:
+  contact:
+    email: pramudya500@gmail.com
+    name: Nanda Rizky Pramudya
+  description: Swagger API for JobFinder.
+  termsOfService: http://swagger.io/terms/
+  title: JobFinder Swagger API
+  version: "1.0"
+paths:
+  /companies:
+    post:
+      parameters:
+      - description: Body
+        in: body
+        name: _
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateCompany'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ResSuccess'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+      summary: Register company
+      tags:
+      - companies
+  /companies/{id}:
+    delete:
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+      summary: Delete company by id
+      tags:
+      - companies
+    get:
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResSuccess'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+      summary: Find company by id
+      tags:
+      - companies
+  /jobs:
+    get:
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: size
+        type: integer
+      - description: Keyword for job title or description
+        in: query
+        name: keyword
+        type: string
+      - description: Company name
+        in: query
+        name: companyName
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/response.ResSuccess'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+      summary: find job
+      tags:
+      - jobs
+    post:
+      parameters:
+      - description: Body
+        in: body
+        name: _
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateJobReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResFailed'
+      summary: Create new job
+      tags:
+      - jobs
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
